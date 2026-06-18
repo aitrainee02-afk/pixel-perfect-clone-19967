@@ -1,14 +1,50 @@
-export function Logo({ className = "h-8 w-8" }: { className?: string }) {
+type LogoProps = {
+  className?: string;
+  /** Height in px for the mark + wordmark lockup */
+  size?: number;
+};
+
+/**
+ * MODAIC logo lockup — white symbol + "MODAIC" wordmark.
+ * Pure inline SVG so it stays crisp at any size and inherits currentColor.
+ */
+export function Logo({ className = "", size = 36 }: LogoProps) {
+  const h = size;
   return (
-    <svg viewBox="0 0 40 40" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="MODAIC">
-      <defs>
-        <linearGradient id="modaicGrad" x1="0" y1="0" x2="40" y2="40">
-          <stop offset="0%" stopColor="#9645e1" />
-          <stop offset="100%" stopColor="#d946c8" />
-        </linearGradient>
-      </defs>
-      <path d="M20 2 L38 20 L20 38 L2 20 Z" stroke="url(#modaicGrad)" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M20 10 L30 20 L20 30 L10 20 Z" stroke="url(#modaicGrad)" strokeWidth="1.5" strokeLinejoin="round" opacity="0.7" />
+    <svg
+      viewBox="0 0 260 64"
+      height={h}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="MODAIC"
+      role="img"
+    >
+      {/* Symbol: 4 petal arcs around a diamond — rendered in pure white */}
+      <g transform="translate(2 2)" fill="#ffffff">
+        {/* Outer petals (top, right, bottom, left) */}
+        <path d="M30 0a18 18 0 0 1 18 18h-8a10 10 0 0 0-10-10V0z" />
+        <path d="M60 30a18 18 0 0 1-18 18v-8a10 10 0 0 0 10-10h8z" />
+        <path d="M30 60a18 18 0 0 1-18-18h8a10 10 0 0 0 10 10v8z" />
+        <path d="M0 30a18 18 0 0 1 18-18v8a10 10 0 0 0-10 10H0z" />
+        {/* Center diamond outline */}
+        <path
+          d="M30 14l16 16-16 16L14 30 30 14zm0 8l-8 8 8 8 8-8-8-8z"
+          fillRule="evenodd"
+        />
+      </g>
+      {/* Wordmark */}
+      <text
+        x="78"
+        y="44"
+        fill="#ffffff"
+        fontFamily="'Inter', 'Helvetica Neue', Arial, sans-serif"
+        fontWeight={800}
+        fontSize="34"
+        letterSpacing="2"
+      >
+        MODAIC
+      </text>
     </svg>
   );
 }
