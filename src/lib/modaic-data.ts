@@ -61,7 +61,6 @@ export const bagAsset = {
 
 // Paired with-bg / no-bg product set for the Remove Background section.
 const removeBgAll = [
-  { id: "handbag", name: "Leather Handbag", type: "bag", bg: bagAsset.withBackground, nobg: bagAsset.noBackground },
   { id: "perfume", name: "Purple Perfume", type: "fragrance", bg: refPerfume.url, nobg: perfumeNoBg.url },
   { id: "watch", name: "Chronograph Watch", type: "watch", bg: refWatch.url, nobg: watchNoBg.url },
 ];
