@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { modaicLogo } from "@/lib/modaic-data";
+import { Logo } from "./Logo";
 
 const LETTERS = ["M", "O", "D", "A", "I", "C"];
 
