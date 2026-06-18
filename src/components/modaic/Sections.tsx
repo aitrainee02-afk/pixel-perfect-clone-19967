@@ -411,22 +411,24 @@ export function RemoveBackground() {
               <span key={p} className="rounded-full px-4 py-2 text-xs font-medium text-text-secondary" style={{ background: "var(--surface)", border: "1px solid var(--border-medium)" }}>{p}</span>
             ))}
           </div>
-          <div className="mt-10">
-            <div className="relative overflow-hidden rounded-2xl" style={{ border: "1px solid var(--border-medium)", boxShadow: "var(--card-glow)" }}>
-              <video
-                src="/removebg_video.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto block"
-                style={{ display: "block" }}
-              />
-            </div>
+          <div className="group relative mt-10 overflow-hidden rounded-2xl cursor-pointer" style={{ border: "1px solid var(--border-medium)", boxShadow: "var(--card-glow)", aspectRatio: "4 / 5" }}>
+            <img
+              src="/handbag_original.png"
+              alt="Handbag with background"
+              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out group-hover:opacity-0"
+            />
+            <img
+              src="/handbag_bg_removed.png"
+              alt="Handbag isolated"
+              className="absolute inset-0 h-full w-full object-contain p-6 opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100"
+              style={{ background: "radial-gradient(ellipse at center, rgba(150,69,225,0.15), transparent 70%)" }}
+            />
+            <span className="absolute bottom-3 left-3 rounded-full px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-text-muted transition-opacity duration-500 group-hover:opacity-0" style={{ background: "rgba(13,11,26,0.75)", backdropFilter: "blur(8px)" }}>Hover to isolate</span>
+            <span className="absolute bottom-3 right-3 rounded-full px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-text-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "rgba(152,50,226,0.6)", backdropFilter: "blur(8px)" }}>Isolated</span>
           </div>
         </motion.div>
 
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="grid grid-cols-2 gap-5">
           {removeBgProducts.map((p) => (
             <motion.div
               key={p.name}
@@ -435,11 +437,10 @@ export function RemoveBackground() {
               className="group relative overflow-hidden rounded-2xl"
               style={{
                 border: "1px solid var(--border-subtle)",
-                aspectRatio: "1 / 1",
-                background: "#0F074D",
+                aspectRatio: "2 / 3",
+                background: "#08060f",
               }}
             >
-              {/* with-background photo — fades out on hover to reveal the isolated product. Identical sizing keeps the product perfectly stationary. */}
               <img
                 src={p.bg}
                 alt={p.name}
@@ -447,7 +448,6 @@ export function RemoveBackground() {
                 draggable={false}
                 className="absolute inset-0 block h-full w-full object-contain transition-opacity duration-500 ease-out group-hover:opacity-0"
               />
-              {/* no-background isolated product, sits on the dark indigo backdrop at the EXACT same coordinates */}
               <img
                 src={p.nobg}
                 alt={`${p.name} isolated`}
@@ -456,7 +456,7 @@ export function RemoveBackground() {
                 className="absolute inset-0 block h-full w-full object-contain opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
               />
               <span className="absolute right-2 top-2 rounded-full px-2 py-0.5 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-text-primary opacity-0 transition group-hover:opacity-100" style={{ background: "rgba(152,50,226,0.6)", backdropFilter: "blur(8px)" }}>Isolated</span>
-              <span className="absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-text-muted transition group-hover:opacity-0" style={{ background: "rgba(15,7,77,0.7)", backdropFilter: "blur(6px)" }}>Hover</span>
+              <span className="absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-text-muted transition group-hover:opacity-0" style={{ background: "rgba(8,6,15,0.7)", backdropFilter: "blur(6px)" }}>Hover</span>
             </motion.div>
           ))}
         </motion.div>
@@ -620,90 +620,15 @@ export function Upscale() {
             transition={{ duration: 0.8, ease }}
             className="lg:col-span-7"
           >
-            <div
-              onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; }}
-              onDragEnter={(e) => { e.preventDefault(); setIsDraggingOver(true); }}
-              onDragLeave={(e) => {
-                if (e.currentTarget.contains(e.relatedTarget as Node)) return;
-                setIsDraggingOver(false);
-              }}
-              onDrop={handleDrop}
-              className="relative flex min-h-[480px] flex-col items-center justify-center overflow-hidden rounded-[28px] p-8 transition-all duration-300"
-              style={{
-                background: "rgba(20, 18, 42, 0.85)",
-                border: `1px dashed ${isDraggingOver ? "#d946c8" : "rgba(180, 80, 180, 0.55)"}`,
-                boxShadow: isDraggingOver
-                  ? "0 0 50px rgba(217, 70, 200, 0.25), inset 0 0 50px rgba(150, 69, 225, 0.12)"
-                  : "inset 0 0 40px rgba(150, 69, 225, 0.08)",
-                transform: isDraggingOver ? "scale(1.01)" : "scale(1)",
-              }}
-            >
-              <AnimatePresence mode="wait">
-                {!selectedImage && (
-                  <motion.div
-                    key="empty"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="flex flex-col items-center text-center"
-                  >
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg, rgba(150,69,225,0.25), rgba(217,70,200,0.25))", border: "1px solid rgba(150,69,225,0.4)" }}>
-                      <UploadCloud size={28} className="text-pink-vivid" />
-                    </div>
-                    <p className="text-h3 mt-6">Drop image to upscale</p>
-                    <p className="text-body mt-3 max-w-sm">Drag a low-resolution asset here to enhance it to print-ready quality.</p>
-                    <p className="text-caption mt-6 uppercase tracking-[0.25em]">or tap a thumbnail to start</p>
-                  </motion.div>
-                )}
-
-                {selectedImage && isUpscaling && (
-                  <motion.div key="proc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative w-full max-w-md">
-                    <div className="relative overflow-hidden rounded-2xl" style={{ border: "1px solid var(--border-active)" }}>
-                      <img src={selectedImage.url} alt="" className="block aspect-square w-full object-cover" style={{ filter: "blur(6px) saturate(1.1)" }} />
-                      <motion.div
-                        className="absolute inset-x-0 h-1"
-                        style={{ background: "linear-gradient(90deg, transparent, #d946c8, transparent)", boxShadow: "0 0 20px #d946c8" }}
-                        animate={{ top: ["0%", "100%", "0%"] }}
-                        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-                      />
-                    </div>
-                    <div className="mt-6 flex items-center gap-3 justify-center">
-                      <Loader2 size={18} className="animate-spin text-pink-vivid" />
-                      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-text-primary">Upscaling image…</p>
-                    </div>
-                    <p className="text-caption mt-2 text-center">Recovering texture, sharpness, and detail.</p>
-                  </motion.div>
-                )}
-
-                {selectedImage && isComplete && (
-                  <motion.div key="done" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="w-full max-w-md">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="overflow-hidden rounded-2xl" style={{ border: "1px solid var(--border-subtle)" }}>
-                        <img src={selectedImage.url} alt="before" className="block aspect-square w-full object-cover" style={{ filter: "blur(3px)" }} />
-                        <p className="p-2 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-text-muted" style={{ background: "var(--surface)" }}>Before · 72 DPI</p>
-                      </div>
-                      <div className="overflow-hidden rounded-2xl" style={{ border: "1px solid var(--border-active)", boxShadow: "0 0 30px rgba(150,69,225,0.35)" }}>
-                        <img src={selectedImage.url} alt="after" className="block aspect-square w-full object-cover" />
-                        <p className="p-2 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-pink-vivid" style={{ background: "var(--surface)" }}>After · 300 DPI</p>
-                      </div>
-                    </div>
-                    <div className="mt-5 flex items-center justify-center gap-2">
-                      <Check size={16} className="text-pink-vivid" />
-                      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-text-primary">Upscale complete</p>
-                    </div>
-                    <p className="text-caption mt-1 text-center">300 DPI print-ready output generated.</p>
-                    <div className="mt-5 flex justify-center">
-                      <button
-                        onClick={() => { setSelectedImage(null); setIsComplete(false); }}
-                        className="rounded-full px-5 py-2 text-xs font-medium uppercase tracking-[0.25em] text-text-secondary transition hover:text-text-primary"
-                        style={{ border: "1px solid var(--border-medium)" }}
-                      >
-                        Try another
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div className="relative overflow-hidden rounded-[28px]" style={{ border: "1px solid var(--border-medium)", boxShadow: "var(--card-glow)" }}>
+              <video
+                src="/upscale_video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto block"
+              />
             </div>
           </motion.div>
 
