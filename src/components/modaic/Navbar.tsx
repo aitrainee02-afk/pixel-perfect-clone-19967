@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { modaicLogo } from "@/lib/modaic-data";
+import { Logo } from "./Logo";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,13 +20,13 @@ export function Navbar() {
       }}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-        <a href="#hero" className="flex items-center gap-2 shrink-0">
-          <img
-            src={modaicLogo}
-            alt="MODAIC — AI Agent Platform"
-            className="h-24 w-auto object-contain sm:h-40 md:h-[220px]"
-            style={{ filter: "drop-shadow(0 0 32px rgba(152,50,226,0.55))" }}
-          />
+        <a
+          href="#hero"
+          className="flex items-center gap-2 shrink-0"
+          style={{ filter: "drop-shadow(0 0 24px rgba(152,50,226,0.45))" }}
+          aria-label="MODAIC home"
+        >
+          <Logo size={36} className="sm:h-[44px] md:h-[52px] h-9 w-auto" />
         </a>
         <nav className="hidden gap-8 text-xs font-medium uppercase tracking-[0.25em] text-text-secondary md:flex">
           <a href="#capabilities" className="transition hover:text-text-primary">Modules</a>
