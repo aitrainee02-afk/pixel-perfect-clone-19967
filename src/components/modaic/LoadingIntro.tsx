@@ -100,13 +100,8 @@ export function LoadingIntro() {
                 "width 600ms ease-out, height 600ms ease-out, opacity 600ms ease-out, border-color 600ms ease-out",
             }}
           />
-          <img
-            src={modaicLogo}
-            alt=""
+          <div
             style={{
-              width: 64,
-              height: 64,
-              objectFit: "contain",
               opacity: stage >= 2 ? 1 : 0,
               transform:
                 stage >= 3
@@ -119,8 +114,13 @@ export function LoadingIntro() {
               transition:
                 "opacity 500ms cubic-bezier(0.34,1.56,0.64,1), transform 500ms cubic-bezier(0.34,1.56,0.64,1)",
               filter: "drop-shadow(0 0 24px rgba(168,85,247,0.55))",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            <Logo size={64} />
+          </div>
         </div>
 
         {/* Wordmark */}
