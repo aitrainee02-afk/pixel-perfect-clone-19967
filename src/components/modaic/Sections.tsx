@@ -56,7 +56,7 @@ export function Hero() {
     <section
       id="hero"
       className="hero-scatter relative w-full overflow-hidden"
-      style={{ minHeight: "100vh", background: "#08060f" }}
+      style={{ minHeight: "100vh", background: "#19152E" }}
     >
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
 
@@ -438,7 +438,7 @@ export function RemoveBackground() {
               style={{
                 border: "1px solid var(--border-subtle)",
                 aspectRatio: "2 / 3",
-                background: "#08060f",
+                background: "#19152E",
               }}
             >
               <img
