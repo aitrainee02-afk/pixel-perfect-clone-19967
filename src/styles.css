@@ -45,12 +45,12 @@
 :root {
   --radius: 0.75rem;
 
-  --void:      #040331;
-  --deep:      #07053d;
-  --surface:   #0F074D;
-  --raised:    #160c5e;
-  --overlay:   #0F074D;
-  --sidebar:   #07053d;
+  --void:      #19152E;
+  --deep:      #19152E;
+  --surface:   #221d3d;
+  --raised:    #2a2448;
+  --overlay:   #221d3d;
+  --sidebar:   #19152E;
 
   --purple-vivid:  #9832E2;
   --purple-bright: #9832E2;

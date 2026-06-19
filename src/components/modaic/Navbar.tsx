@@ -26,7 +26,6 @@ export function Navbar() {
           style={{ filter: "drop-shadow(0 0 24px rgba(152,50,226,0.45))" }}
           aria-label="MODAIC home"
         >
-          <img src="/modaic_logo_icon.png" alt="MODAIC icon" className="h-8 w-8 object-contain" />
           <Logo size={36} className="sm:h-[44px] md:h-[52px] h-9 w-auto" />
         </a>
         <nav className="hidden gap-8 text-xs font-medium uppercase tracking-[0.25em] text-text-secondary md:flex">

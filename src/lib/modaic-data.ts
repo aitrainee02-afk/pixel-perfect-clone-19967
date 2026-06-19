@@ -13,6 +13,7 @@ import productVideoAsset from "@/assets/modaic/product_video.mp4.asset.json";
 import vtonVideoV2 from "@/assets/modaic/vton_v2.mp4.asset.json";
 import editorVideoAsset from "@/assets/modaic/editor_video.mp4.asset.json";
 import textToVideoV2 from "@/assets/modaic/text_to_video_v2.mp4.asset.json";
+import removeBgVideoAsset from "@/assets/modaic/remove_bg_video.mp4.asset.json";
 import handbagNoBg from "@/assets/modaic/black_handbag_cutout.png.asset.json";
 import handbagScene from "@/assets/modaic/black_handbag_scene.png.asset.json";
 import sneakerNoBg from "@/assets/modaic/sneaker_nobg.png.asset.json";
@@ -115,7 +116,7 @@ export const modules = [
   { n: "03", tag: "VIDEO · ANIMATION", tagline: "Give your catalogue a heartbeat.", title: "Product Image to Video", desc: "Turn static product photography into cinematic brand content in seconds. From still to scroll-stopping — MODAIC brings your inventory to life with motion that converts.", img: P.sneakerHigh, video: productVideoAsset.url },
   { n: "04", tag: "CATALOG · AUTOMATION", tagline: "From garment to channel. One pipeline.", title: "Create Catalog", desc: "Upload a garment, select your channel — Amazon, Myntra, Shopify — and receive perfectly formatted marketplace-ready catalogue images. End-to-end. Automated. Accurate.", img: P.jacketBlack },
   { n: "05", tag: "EDIT · RETOUCH", tagline: "Edit with language, not layers.", title: "AI Image Editor", desc: "Describe the change. Watch it happen. Professional-grade retouching and creative direction — powered by natural language. No Photoshop. No hours. Just precision at scale.", img: M.modelBeauty, video: editorVideoAsset.url, videoCaption: "AI Image Editor Preview" },
-  { n: "06", tag: "ISOLATION · PROCESSING", tagline: "Clean. Precise. Instant.", title: "Remove Background", desc: "Isolate any product from any background with sub-pixel accuracy — at any volume, any format, any deadline. The foundation of great product photography, fully automated.", img: P.bagLuxury },
+  { n: "06", tag: "ISOLATION · PROCESSING", tagline: "Clean. Precise. Instant.", title: "Remove Background", desc: "Isolate any product from any background with sub-pixel accuracy — at any volume, any format, any deadline. The foundation of great product photography, fully automated.", img: P.bagLuxury, video: removeBgVideoAsset.url },
   { n: "07", tag: "UPSCALE · ENHANCE", tagline: "Restore resolution. Recover detail.", title: "Upscale Image", desc: "Transform low-resolution assets into print-ready quality imagery without reshooting. MODAIC recovers texture, sharpness, and detail that compression erased.", img: P.watchGold },
   { n: "08", tag: "VIDEO · GENERATION", tagline: "From copy to film. Instantly.", title: "Text to Video", desc: "Describe your creative vision in plain language. MODAIC renders brand-accurate, campaign-ready video content in seconds. The future of content production starts with a sentence.", img: M.modelHighFashion, video: textToVideoV2.url, videoCaption: "Text to Video Preview" },
 ];
