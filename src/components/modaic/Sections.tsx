@@ -349,9 +349,6 @@ export function Capabilities() {
                     <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(13,11,26,0.85) 100%)" }} />
                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                       <span className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-text-primary">Module {m.n}</span>
-                      <span className="rounded-full px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-text-primary" style={{ background: "rgba(150,69,225,0.4)", backdropFilter: "blur(10px)" }}>
-                        Live
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -651,7 +648,7 @@ export function Upscale() {
               </div>
               <div>
                 <h3 className="text-h3 mb-2" style={{ color: "var(--text-primary)" }}>Drop image to upscale</h3>
-                <p className="text-body max-w-md mx-auto">Drag a low-resolution asset here to enhance it to print-ready quality.</p>
+                <p className="text-body max-w-md mx-auto">Drag a low-resolution asset here, drop one from the 72 DPI library below, or click to browse.</p>
               </div>
               <span className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-text-muted">or click to browse</span>
             </div>
@@ -696,6 +693,60 @@ export function Upscale() {
               </div>
             </div>
           )}
+
+          {/* 72 DPI Library — drag a thumbnail into the drop zone, or click to upscale */}
+          <div className="mt-16">
+            <div className="mb-6 flex items-end justify-between">
+              <div>
+                <p className="text-eyebrow mb-2">72 DPI Library</p>
+                <p className="text-body max-w-lg">Drag any sample into the zone above, or click to upscale instantly.</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {upscaleImages.map((img) => (
+                <button
+                  key={img.id}
+                  type="button"
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData("text/uri-list", img.url);
+                    e.dataTransfer.setData("text/plain", img.url);
+                    e.dataTransfer.effectAllowed = "copy";
+                  }}
+                  onClick={() => {
+                    setImageSrc(img.url);
+                    setIsComplete(false);
+                    setIsProcessing(true);
+                    window.setTimeout(() => {
+                      setIsProcessing(false);
+                      setIsComplete(true);
+                    }, 1500);
+                  }}
+                  className="group relative overflow-hidden rounded-xl text-left transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    border: "1px solid var(--border-medium)",
+                    background: "var(--surface)",
+                    boxShadow: "0 0 0 rgba(0,0,0,0)",
+                    cursor: "grab",
+                  }}
+                  title={`Drag or click to upscale · ${img.name}`}
+                >
+                  <img
+                    src={img.url}
+                    alt={img.name}
+                    draggable={false}
+                    className="block aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+                    style={{ filter: "blur(0.6px)", opacity: 0.92 }}
+                  />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 55%, rgba(13,11,26,0.85) 100%)" }} />
+                  <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                    <span className="text-[0.55rem] font-semibold uppercase tracking-[0.25em] text-text-primary truncate">{img.name}</span>
+                    <span className="rounded-full px-2 py-0.5 text-[0.5rem] font-semibold uppercase tracking-[0.25em] text-text-primary" style={{ background: "rgba(152,50,226,0.5)", backdropFilter: "blur(6px)" }}>72 DPI</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </SectionShell>
