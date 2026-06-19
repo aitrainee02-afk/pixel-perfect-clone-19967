@@ -589,11 +589,23 @@ export function Upscale() {
     reader.readAsDataURL(file);
   };
 
+  const startFromUrl = (url: string) => {
+    setImageSrc(url);
+    setIsComplete(false);
+    setIsProcessing(true);
+    window.setTimeout(() => {
+      setIsProcessing(false);
+      setIsComplete(true);
+    }, 1500);
+  };
+
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDraggingOver(false);
     const file = e.dataTransfer.files?.[0];
-    if (file) handleFile(file);
+    if (file) { handleFile(file); return; }
+    const url = e.dataTransfer.getData("text/uri-list") || e.dataTransfer.getData("text/plain");
+    if (url) startFromUrl(url);
   };
 
   const reset = () => {
