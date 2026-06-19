@@ -570,36 +570,40 @@ export function CreateCatalog() {
 }
 
 /* ---------- UPSCALE ---------- */
-type UpscaleImg = { id: string; name: string; url: string };
-
 export function Upscale() {
-  const [selectedImage, setSelectedImage] = useState<UpscaleImg | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-  const [isUpscaling, setIsUpscaling] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const start = (img: UpscaleImg) => {
-    setSelectedImage(img);
-    setIsComplete(false);
-    setIsUpscaling(true);
-    window.setTimeout(() => {
-      setIsUpscaling(false);
-      setIsComplete(true);
-    }, 1600);
+  const handleFile = (file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageSrc(reader.result as string);
+      setIsComplete(false);
+      setIsProcessing(true);
+      window.setTimeout(() => {
+        setIsProcessing(false);
+        setIsComplete(true);
+      }, 1500);
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, img: UpscaleImg) => {
-    e.dataTransfer.setData("image/id", img.id);
-    e.dataTransfer.effectAllowed = "copy";
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDraggingOver(false);
-    const imageId = e.dataTransfer.getData("image/id");
-    const image = upscaleImages.find((i) => i.id === imageId);
-    if (!image) return;
-    start(image);
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleFile(file);
+  };
+
+  const reset = () => {
+    setImageSrc(null);
+    setIsComplete(false);
+    setIsProcessing(false);
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   return (
@@ -608,71 +612,91 @@ export function Upscale() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="max-w-2xl">
           <span className="rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-pink-vivid" style={{ background: "rgba(217,70,200,0.1)", border: "1px solid rgba(217,70,200,0.3)" }}>AI Enhanced</span>
           <h2 className="text-h1 mt-6">Upscale<br /><span className="gradient-text">Image</span></h2>
-          <p className="text-body mt-6">Drag any low-resolution thumbnail into the dropzone. MODAIC recovers texture, sharpness, and detail — print-ready in seconds.</p>
+          <p className="text-body mt-6">Drop a low-resolution asset into the zone below. MODAIC recovers texture, sharpness, and detail — print-ready 300 DPI in seconds.</p>
         </motion.div>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* LEFT — Drop Zone */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease }}
-            className="lg:col-span-7"
-          >
-            <div className="relative overflow-hidden rounded-[28px]" style={{ border: "1px solid var(--border-medium)", boxShadow: "var(--card-glow)" }}>
-              <video
-                src="/upscale_video.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto block"
-              />
-            </div>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease }}
+          className="mt-14"
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) handleFile(f);
+            }}
+          />
 
-          {/* RIGHT — 3x4 thumbnail grid */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease, delay: 0.15 }}
-            className="lg:col-span-5"
-          >
-            <p className="text-eyebrow mb-4">Low-Res Library · Drag to Enhance</p>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {upscaleImages.map((img) => (
-                <div
-                  key={img.id}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, img)}
-                  onClick={() => start(img)}
-                  className="group relative overflow-hidden rounded-xl cursor-grab active:cursor-grabbing transition-all duration-300"
-                  style={{
-                    border: "1px solid var(--border-subtle)",
-                    background: "var(--surface)",
-                  }}
-                  title={img.name}
-                >
-                  <img
-                    src={img.url}
-                    alt={img.name}
-                    loading="lazy"
-                    draggable={false}
-                    className="block aspect-square w-full object-cover transition-all duration-300 group-hover:scale-[1.03]"
-                    style={{ filter: "blur(3px)", imageRendering: "pixelated", opacity: 0.85 }}
-                    onMouseEnter={(e) => { e.currentTarget.style.filter = "blur(1px)"; e.currentTarget.style.opacity = "1"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.filter = "blur(3px)"; e.currentTarget.style.opacity = "0.85"; }}
-                  />
-                  <div className="pointer-events-none absolute inset-0 rounded-xl transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(150,69,225,0.22)]" />
-                  <span className="absolute bottom-1.5 left-1.5 rounded-full px-2 py-0.5 text-[0.5rem] font-semibold uppercase tracking-[0.2em] text-text-muted" style={{ background: "rgba(13,11,26,0.7)", backdropFilter: "blur(6px)" }}>72 DPI</span>
-                </div>
-              ))}
+          {!imageSrc ? (
+            <div
+              onDragOver={(e) => { e.preventDefault(); setIsDraggingOver(true); }}
+              onDragLeave={() => setIsDraggingOver(false)}
+              onDrop={onDrop}
+              onClick={() => inputRef.current?.click()}
+              className="relative flex flex-col items-center justify-center gap-5 rounded-[28px] px-8 py-24 text-center cursor-pointer transition-all duration-300"
+              style={{
+                border: `2px dashed ${isDraggingOver ? "rgba(217,70,200,0.8)" : "rgba(152,50,226,0.4)"}`,
+                background: isDraggingOver ? "rgba(152,50,226,0.08)" : "var(--surface)",
+                boxShadow: isDraggingOver ? "0 0 60px rgba(152,50,226,0.35)" : "var(--card-glow)",
+              }}
+            >
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg, #9645e1, #d946c8)", boxShadow: "0 0 30px rgba(152,50,226,0.5)" }}>
+                <UploadCloud size={28} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-h3 mb-2" style={{ color: "var(--text-primary)" }}>Drop image to upscale</h3>
+                <p className="text-body max-w-md mx-auto">Drag a low-resolution asset here to enhance it to print-ready quality.</p>
+              </div>
+              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-text-muted">or click to browse</span>
             </div>
-            <p className="text-caption mt-4">Tap or drag any thumbnail into the dropzone to upscale.</p>
-          </motion.div>
-        </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {/* Before */}
+              <div className="relative overflow-hidden rounded-2xl" style={{ border: "1px solid var(--border-medium)", background: "var(--surface)" }}>
+                <img
+                  src={imageSrc}
+                  alt="Before"
+                  className="block aspect-square w-full object-contain"
+                  style={{ filter: "blur(1.5px)", imageRendering: "pixelated", opacity: 0.9 }}
+                />
+                <span className="absolute bottom-3 left-3 rounded-full px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-text-muted" style={{ background: "rgba(13,11,26,0.75)", backdropFilter: "blur(8px)" }}>Before · 72 DPI</span>
+              </div>
+
+              {/* After */}
+              <div className="relative overflow-hidden rounded-2xl" style={{ border: "1px solid var(--border-active)", background: "var(--surface)", boxShadow: "0 0 50px rgba(217,70,200,0.25)" }}>
+                {isProcessing ? (
+                  <div className="flex aspect-square w-full items-center justify-center">
+                    <div className="flex flex-col items-center gap-4">
+                      <Loader2 size={36} className="animate-spin text-pink-vivid" />
+                      <span className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-text-secondary">Enhancing · 300 DPI</span>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <img src={imageSrc} alt="After" className="block aspect-square w-full object-contain" />
+                    <span className="absolute bottom-3 left-3 rounded-full px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-text-primary" style={{ background: "rgba(152,50,226,0.6)", backdropFilter: "blur(8px)" }}>After · 300 DPI</span>
+                  </>
+                )}
+              </div>
+
+              <div className="md:col-span-2 flex justify-center">
+                <button
+                  onClick={reset}
+                  className="rounded-full px-6 py-3 text-sm font-medium text-text-secondary transition hover:text-text-primary"
+                  style={{ border: "1px solid var(--border-medium)" }}
+                >
+                  Try another
+                </button>
+              </div>
+            </div>
+          )}
+        </motion.div>
       </div>
     </SectionShell>
   );
