@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
+import { signInWithGoogle } from "@/lib/supabase-auth";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,10 +36,10 @@ export function Navbar() {
           <a href="#cta" className="transition hover:text-text-primary">Pricing</a>
         </nav>
         <div className="flex items-center gap-3">
-          <button className="hidden rounded-full px-5 py-2 text-sm font-medium text-text-secondary transition hover:text-text-primary sm:block" style={{ border: "1px solid var(--border-medium)" }}>
+          <button onClick={signInWithGoogle} className="hidden rounded-full px-5 py-2 text-sm font-medium text-text-secondary transition hover:text-text-primary sm:block" style={{ border: "1px solid var(--border-medium)" }}>
             Log in
           </button>
-          <button className="glow-button glow-button-hover text-sm">
+          <button onClick={signInWithGoogle} className="glow-button glow-button-hover text-sm">
             Get Started <ArrowRight size={16} />
           </button>
         </div>
