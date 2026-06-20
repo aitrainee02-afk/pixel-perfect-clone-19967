@@ -5,6 +5,7 @@ import { modules, features, heroProducts, galleryImages, productGalleryUnique, h
 import { BeforeAfterSlider } from "./BeforeAfter";
 import ImageCarousel3D from "./ImageCarousel3D";
 import CatalogIslandSelector from "./CatalogIslandSelector";
+import { signInWithGoogle } from "@/lib/supabase-auth";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
