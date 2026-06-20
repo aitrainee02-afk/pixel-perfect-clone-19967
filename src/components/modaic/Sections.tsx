@@ -5,6 +5,7 @@ import { modules, features, heroProducts, galleryImages, productGalleryUnique, h
 import { BeforeAfterSlider } from "./BeforeAfter";
 import ImageCarousel3D from "./ImageCarousel3D";
 import CatalogIslandSelector from "./CatalogIslandSelector";
+import { signInWithGoogle } from "@/lib/supabase-auth";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -129,7 +130,7 @@ export function Hero() {
             transition={{ delay: 0.45 }}
             className="mt-10 flex flex-wrap justify-center gap-4"
           >
-            <MagneticButton>
+            <MagneticButton onClick={signInWithGoogle}>
               Start now <ArrowRight size={18} />
             </MagneticButton>
             <button
@@ -168,7 +169,7 @@ export function Hero() {
 }
 
 
-function MagneticButton({ children }: { children: React.ReactNode }) {
+function MagneticButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
   const ref = useRef<HTMLButtonElement>(null);
   const x = useSpring(0, { stiffness: 300, damping: 20 });
   const y = useSpring(0, { stiffness: 300, damping: 20 });
@@ -176,6 +177,7 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
     <motion.button
       ref={ref}
       style={{ x, y }}
+      onClick={onClick}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
         x.set((e.clientX - (r.left + r.width / 2)) * 0.3);
