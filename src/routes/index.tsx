@@ -47,10 +47,6 @@ function ModaicLanding() {
           <AmbientOrbs />
           <RemoveBackground />
         </div>
-        <div className="relative">
-          <AmbientOrbs />
-          <Upscale />
-        </div>
         <Marquee />
         <FinalCTA />
       </main>
