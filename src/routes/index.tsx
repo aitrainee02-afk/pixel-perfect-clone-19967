@@ -43,10 +43,6 @@ function ModaicLanding() {
           <Capabilities />
         </div>
         <Gallery />
-        <div className="relative">
-          <AmbientOrbs />
-          <RemoveBackground />
-        </div>
         <Marquee />
         <FinalCTA />
       </main>
