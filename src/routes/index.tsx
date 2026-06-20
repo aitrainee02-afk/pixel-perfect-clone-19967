@@ -3,7 +3,7 @@ import { LoadingIntro } from "@/components/modaic/LoadingIntro";
 import { Navbar } from "@/components/modaic/Navbar";
 import { CursorGlow, ScrollProgress, AmbientOrbs, SectionDots } from "@/components/modaic/Effects";
 import {
-  Hero, Capabilities, Gallery, RemoveBackground,
+  Hero, Capabilities, Gallery,
   Marquee, FinalCTA, Footer,
 } from "@/components/modaic/Sections";
 
