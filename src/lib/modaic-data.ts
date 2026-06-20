@@ -145,7 +145,7 @@ export const testimonials = [
   { q: "MODAIC cut our time-to-publish from 3 weeks to 3 days.", a: "Head of E-commerce, D2C Fashion Brand" },
 ];
 
-export const marketplaces = ["AMAZON READY", "MYNTRA READY", "SHOPIFY READY", "FLIPKART READY", "NYKAA READY", "MEESHO READY", "AJIO READY", "TATA CLIQ READY"];
+export const marketplaces = ["AMAZON READY", "MYNTRA READY", "SHOPIFY READY", "TARGET", "EBAY", "NIKE", "ZARA", "H&M", "DIOR"];
 export const marqueeTags = ["PRODUCT IMAGES", "CATALOG OUTPUTS", "STUDIO BACKGROUNDS", "MARKETPLACE FORMATS", "PRINT READY EXPORTS"];
 
 export const removeBgProducts = removeBgPairs;
