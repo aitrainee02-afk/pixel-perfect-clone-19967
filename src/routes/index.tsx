@@ -4,7 +4,7 @@ import { Navbar } from "@/components/modaic/Navbar";
 import { CursorGlow, ScrollProgress, AmbientOrbs, SectionDots } from "@/components/modaic/Effects";
 import {
   Hero, Capabilities, Gallery, RemoveBackground,
-  Upscale, Marquee, FinalCTA, Footer,
+  Marquee, FinalCTA, Footer,
 } from "@/components/modaic/Sections";
 
 export const Route = createFileRoute("/")({
@@ -46,10 +46,6 @@ function ModaicLanding() {
         <div className="relative">
           <AmbientOrbs />
           <RemoveBackground />
-        </div>
-        <div className="relative">
-          <AmbientOrbs />
-          <Upscale />
         </div>
         <Marquee />
         <FinalCTA />

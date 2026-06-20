@@ -9,11 +9,11 @@ import p07 from "@/assets/modaic/07_luxury_product_sneaker.png.asset.json";
 import p08 from "@/assets/modaic/08_luxury_product_perfume.png.asset.json";
 import p09 from "@/assets/modaic/09_luxury_product_watch.png.asset.json";
 import p10 from "@/assets/modaic/10_luxury_product_sunglasses.png.asset.json";
-import productVideoAsset from "@/assets/modaic/product_video.mp4.asset.json";
-import vtonVideoV2 from "@/assets/modaic/vton_v2.mp4.asset.json";
+import productVideoAsset from "@/assets/modaic/product_new.mp4.asset.json";
+import vtonVideoV2 from "@/assets/modaic/vton_new.mp4.asset.json";
 import editorVideoAsset from "@/assets/modaic/editor_video.mp4.asset.json";
 import textToVideoV2 from "@/assets/modaic/text_to_video_v2.mp4.asset.json";
-import removeBgVideoAsset from "@/assets/modaic/remove_bg_video.mp4.asset.json";
+import removeBgVideoAsset from "@/assets/modaic/removebg_new.mp4.asset.json";
 import upscaleVideoAsset from "@/assets/modaic/upscale.mp4.asset.json";
 import handbagNoBg from "@/assets/modaic/black_handbag_cutout.png.asset.json";
 import handbagScene from "@/assets/modaic/black_handbag_scene.png.asset.json";
@@ -145,7 +145,7 @@ export const testimonials = [
   { q: "MODAIC cut our time-to-publish from 3 weeks to 3 days.", a: "Head of E-commerce, D2C Fashion Brand" },
 ];
 
-export const marketplaces = ["AMAZON READY", "MYNTRA READY", "SHOPIFY READY", "FLIPKART READY", "NYKAA READY", "MEESHO READY", "AJIO READY", "TATA CLIQ READY"];
+export const marketplaces = ["AMAZON READY", "MYNTRA READY", "SHOPIFY READY", "TARGET", "EBAY", "NIKE", "ZARA", "H&M", "DIOR"];
 export const marqueeTags = ["PRODUCT IMAGES", "CATALOG OUTPUTS", "STUDIO BACKGROUNDS", "MARKETPLACE FORMATS", "PRINT READY EXPORTS"];
 
 export const removeBgProducts = removeBgPairs;
